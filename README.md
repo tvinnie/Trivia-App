@@ -70,6 +70,7 @@ Fetches a dictionary of categories in which the keys are the ids and the value i
 Request Arguments: None
 
 Returns: An object with a single key, categories, that contains an object of id: category_string key:value pairs.
+
         {
             'categories': { '1' : "Science",
             '2' : "Art",
@@ -86,6 +87,7 @@ Fetches a paginated set of questions, a total number of questions, all categorie
 Request Arguments: page - integer
 
 Returns: An object with 10 paginated questions, total questions, object including all categories, and current category string
+
     {
         'questions': [
             {
@@ -113,6 +115,7 @@ Fetches questions for a cateogry specified by id request argument
 Request Arguments: id - integer
 
 Returns: An object with questions for the specified category, total questions, and current category string
+
     {
         'questions': [
             {
@@ -141,12 +144,14 @@ Returns: Does not need to return anything besides the appropriate HTTP status co
 Sends a post request in order to get the next question
 
 Request Body:
+
     {
         'previous_questions': [1, 4, 20, 15]
         quiz_category': 'current category'
     }
 
 Returns: a single new question object
+
     {
         'question': {
             'id': 1,
@@ -162,6 +167,7 @@ Returns: a single new question object
 Sends a post request in order to add a new question
 
 Request Body:
+
     {
         'question':  'Heres a new question string',
         'answer':  'Heres a new answer string',
@@ -176,9 +182,11 @@ Returns: Does not return any new data
 Sends a post request in order to search for a specific question by search term
 
 Request Body:
+
     {
         'searchTerm': 'this is the term the user is looking for'
     }
+    
 
 Returns: any array of questions, a number of totalQuestions that met the search term and the current category string
 

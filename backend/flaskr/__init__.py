@@ -37,20 +37,19 @@ def create_app(test_config=None):
             "Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS"
         )
         return response
-
-
-    @app.route("/categories")
+        
+    @app.route('/categories')
     def retrieve_categories():
-        categories = Category.query.all()
-        current_category = [category.format() for category in categories]
-        return jsonify(
-            {
-                "success": True,
-                "categories": current_category,
-                "total_categories":len(categories),
-            }
-        )
-    
+        categories = Category.query.order_by(Category.type).all()
+
+        if len(categories) == 0:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'categories': {category.id: category.type for category in categories}
+        })
+
     @app.route("/questions")
     def retrieve_questions():
         selection_quiz = Question.query.all()
@@ -160,35 +159,36 @@ def create_app(test_config=None):
         except Exception:
             abort(422)
 
+   
     @app.route('/quizzes', methods=['POST'])
-    def quizzes():
-        data = request.get_json()
+    def play_quiz():
 
-        previous_questions = data['previous_questions']
-        quiz_category = data['quiz_category']
+        try:
 
-        questions = None
-        if quiz_category['type'] == 'click':
-            questions = Question.query.all()
-        else:
-            questions = Question.query.filter_by(category =quiz_category['id']).all()
-        
-        formatted_questions = [question.format() for question in questions]
+            body = request.get_json()
 
-        potential_questions = []
+            if not ('quiz_category' in body and 'previous_questions' in body):
+                abort(422)
 
-        for qn in formatted_questions:
-            if qn['id'] not in previous_questions:
-                potential_questions.append(qn)
-        
-        selected_question = None
-        if len(potential_questions) > 0:
-            selected_question = random.choice(potential_questions)
+            category = body.get('quiz_category')
+            previous_questions = body.get('previous_questions')
 
-        return jsonify({
-            "success":True,
-            'question': selected_question
-        })
+            if category['type'] == 'click':
+                available_questions = Question.query.filter(
+                    Question.id.notin_((previous_questions))).all()
+            else:
+                available_questions = Question.query.filter_by(
+                    category=category['id']).filter(Question.id.notin_((previous_questions))).all()
+
+            new_question = available_questions[random.randrange(
+                0, len(available_questions))].format() if len(available_questions) > 0 else None
+
+            return jsonify({
+                'success': True,
+                'question': new_question
+            })
+        except:
+            abort(422)
     
     @app.errorhandler(404)
     def not_found(error):
@@ -213,5 +213,13 @@ def create_app(test_config=None):
             'error':422,
             'message':'Unprocessable'
         }),422
+
+    @app.errorhandler(500)
+    def server_error(error):
+        return jsonify({
+            'success':False,
+            'error':500,
+            'message':'Server Error'
+        }),500
 
     return app

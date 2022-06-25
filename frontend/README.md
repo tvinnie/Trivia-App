@@ -72,7 +72,6 @@ You can optionally update this game play to increase the number of questions or 
 - Returns: An object with a single key, categories, that contains an object of id: category_string key:value pairs.
 
 ```json
-
 {
   "categories": {
     "1": "Science",
@@ -94,7 +93,6 @@ You can optionally update this game play to increase the number of questions or 
 - Returns: An object with 10 paginated questions, total questions, object including all categories, and current category string
 
 ```json
-
 {
   "questions": [
     {
@@ -127,7 +125,6 @@ You can optionally update this game play to increase the number of questions or 
 - Returns: An object with questions for the specified category, total questions, and current category string
 
 ```json
-
 {
   "questions": [
     {
@@ -159,7 +156,6 @@ You can optionally update this game play to increase the number of questions or 
 - Request Body:
 
 ```json
-
 {
     'previous_questions': [1, 4, 20, 15]
     quiz_category': 'current category'
@@ -169,7 +165,6 @@ You can optionally update this game play to increase the number of questions or 
 - Returns: a single new question object
 
 ```json
-
 {
   "question": {
     "id": 1,
@@ -189,7 +184,6 @@ You can optionally update this game play to increase the number of questions or 
 - Request Body:
 
 ```json
-
 {
   "question": "Heres a new question string",
   "answer": "Heres a new answer string",
@@ -208,7 +202,6 @@ You can optionally update this game play to increase the number of questions or 
 - Request Body:
 
 ```json
-
 {
   "searchTerm": "this is the term the user is looking for"
 }
@@ -217,7 +210,6 @@ You can optionally update this game play to increase the number of questions or 
 - Returns: any array of questions, a number of totalQuestions that met the search term and the current category string
 
 ```json
-
 {
   "questions": [
     {

@@ -22,6 +22,7 @@ Completing this trivia app will give you the ability to structure plan, implemen
 # Installing Dependencies
     
     Python 3.7
+
 Follow instructions to install the latest version of python for your platform in the python docs
 
     Virtual Enviornment
@@ -31,6 +32,7 @@ We recommend working within a virtual environment whenever using Python for proj
 Once you have your virtual environment setup and running, install dependencies by naviging to the /backend directory and running:
 
     pip install -r requirements.txt
+
 This will install all of the required packages we selected within the requirements.txt file.
 
     Key Dependencies
@@ -41,9 +43,11 @@ SQLAlchemy is the Python SQL toolkit and ORM we'll use handle the lightweight sq
 Flask-CORS is the extension we'll use to handle cross origin requests from our frontend server.
 
     Database Setup
+
 With Postgres running, restore a database using the trivia.psql file provided. From the backend folder in terminal run:
 
     psql trivia < trivia.psql
+
 Running the server
 From within the backend directory first ensure you are working using your created virtual environment.
 
